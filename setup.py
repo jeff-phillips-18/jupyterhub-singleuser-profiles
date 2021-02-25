@@ -6,12 +6,7 @@ from jupyterhub_singleuser_profiles import version as singleuser_profiles_versio
 import distutils.log
 
 def get_install_requires():
-    print("in install_requires")
-    if os.path.isfile("requirements.txt"):
-        fname = "requirements.txt"
-    else:
-        fname = "requires.txt"
-    with open(fname, 'r') as requirements_file:
+    with open('requirements.txt', 'r') as requirements_file:
         # TODO: respect hashes in requirements.txt file
         res = requirements_file.readlines()
         return [req.split(' ', maxsplit=1)[0] for req in res if req]
@@ -31,6 +26,7 @@ setup(
               ],
           },
     zip_safe=False,
+#    install_requires=['openshift','PyYAML','requests','jsonpath-rw','connexion[swagger-ui]','connexion','jinja2','escapism','tornado','jupyterhub'],
     install_requires=get_install_requires(),
     include_package_data=True,
 )
