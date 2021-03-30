@@ -13,6 +13,7 @@ from flask import Flask
 from flask import redirect
 from flask import request
 from flask import Response
+from flask_cors import CORS
 
 from jupyterhub.services.auth import HubAuth
 
@@ -64,7 +65,7 @@ def get_user_cm(user):
     return cm
 
 @authenticated
-def update_user_cm(user, body): 
+def update_user_cm(user, body):
     _PROFILES.user.update(user['name'], data=body)
     return _PROFILES.user.get(user['name'])
 
@@ -79,7 +80,6 @@ def get_sizes(pure_json=False, *args, **kwargs):
         response.append(size['name'])
     return response
 
-@authenticated
 def get_images(*args, **kwargs):
     _PROFILES.load_profiles()
     images = _PROFILES.images.get()
@@ -97,6 +97,7 @@ def get_size_by_name(size_name, *args, **kwargs):
     return _PROFILES.get_size(size_name)
 
 app = connexion.App(__name__, specification_dir='.', options={'swagger_ui':True})
+CORS(app.app)
 app.add_api('swagger.yaml')
 
 def main():

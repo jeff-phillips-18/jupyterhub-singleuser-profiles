@@ -22,7 +22,7 @@ class EnvVarForm extends React.Component {
 
     async updateVars() {
         var data = await this.API.APIGet(this.API._CMPATH)
-        this.setState({envvars: data['env']},() => {console.log("Updated EnvVars")})
+        this.setState({envvars: data['env']},() => {console.log("=================Updated EnvVars==============")})
         this.renderForms()
     }
 
@@ -92,11 +92,11 @@ class EnvVarForm extends React.Component {
             items: [...previousState.items, newItem]
         }));
         this.setState({index: this.state.index+1}, () => {console.log("Added item " + this.state.index.toString())})
-        
+
     }
 
     renderForms() {
-        
+
         var keys = []
         for (var i = 0; i < this.state.envvars.length;i++) {
             const envvar = this.state.envvars[i]
