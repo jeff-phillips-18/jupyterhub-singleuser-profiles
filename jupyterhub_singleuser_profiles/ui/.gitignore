@@ -1,0 +1,11 @@
+# testing
+/coverage
+
+# production
+/public
+
+*stats.json
+
+.env*.local
+
+node_modules
