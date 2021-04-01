@@ -2,4 +2,4 @@
 """jupyterhub-singleuser-profiles."""
 
 
-__version__ = "0.2.10"
+__version__ = "0.2.11"
