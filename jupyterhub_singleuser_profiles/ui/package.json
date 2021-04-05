@@ -22,7 +22,7 @@
     "build:analyze": "export _ODH_OUTPUT_ONLY=true; run-s build build:bundle-profile build:bundle-analyze",
     "build:bundle-profile": "webpack --config ./config/webpack.prod.js --profile --json > ./bundle.stats.json",
     "build:bundle-analyze": "webpack-bundle-analyzer ./bundle.stats.json",
-    "build:clean": "rimraf ./public",
+    "build:clean": "rimraf ./build",
     "build:prod": "webpack --config ./config/webpack.prod.js",
     "format": "prettier --write \"./**/*.ts\" \"./**/*.tsx\" \"./**/*.scss\"",
     "start:dev": "webpack serve --hot --color --config ./config/webpack.dev.js",

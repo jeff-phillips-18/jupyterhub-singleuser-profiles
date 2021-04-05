@@ -2,10 +2,11 @@
 /coverage
 
 # production
-/public
+/build
 
 *stats.json
 
 .env*.local
 
 node_modules
+yarn.lock
