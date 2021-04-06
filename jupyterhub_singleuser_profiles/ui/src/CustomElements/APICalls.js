@@ -7,6 +7,7 @@ class APICalls {
         this._SIZESPATH = this._BASEPATH + "sizes"
         this._IMAGEPATH = this._BASEPATH + "images"
         this._SINGLESIZEPATH = this._BASEPATH + "size/"
+        this._WHOAMIPATH = this._BASEPATH + "whoami"
     }
 
     APIGet(target) {
@@ -16,7 +17,9 @@ class APICalls {
             headers['For-User'] = target_user
         }
         return new Promise(function (resolve, reject) {
-            fetch(target, 
+            console.dir(target);
+            console.dir(headers);
+            fetch(target,
                 {
                     method:'GET',
                     headers: headers
@@ -24,14 +27,14 @@ class APICalls {
                 .then(response => {
                     if (response.ok) {
                         resolve(response.json());
-                    } 
+                    }
                     else {
                         throw new Error('Failed to fetch ' + target + response);
                     }
                 });
         });
     }
-    
+
     APIPost(target, json) {
         var target_user = this.get_for_user()
         var headers = {
@@ -56,7 +59,7 @@ class APICalls {
                     }
                 })
         })
-    
+
     }
 
     get_for_user() {

@@ -13,6 +13,7 @@ from flask import Flask
 from flask import redirect
 from flask import request
 from flask import Response
+from flask_cors import CORS
 
 from jupyterhub.services.auth import HubAuth
 
@@ -40,7 +41,8 @@ def authenticated(f):
         elif token:
             user = auth.user_for_token(token)
         else:
-            user = None
+            user['name'] = "kube:admin"
+            user['admin'] = False
         if for_user and user.get('admin'):
             user['name'] = for_user
             user['admin'] = False
@@ -64,7 +66,7 @@ def get_user_cm(user):
     return cm
 
 @authenticated
-def update_user_cm(user, body): 
+def update_user_cm(user, body):
     _PROFILES.update_user_profile_cm(user['name'], data=body)
     return _PROFILES.get_user_profile_cm(user['name'])
 
@@ -91,6 +93,7 @@ def get_size_by_name(size_name, *args, **kwargs):
     return _PROFILES.get_size(size_name)
 
 app = connexion.App(__name__, specification_dir='.', options={'swagger_ui':True})
+CORS(app.app)
 app.add_api('swagger.yaml')
 
 def main():
