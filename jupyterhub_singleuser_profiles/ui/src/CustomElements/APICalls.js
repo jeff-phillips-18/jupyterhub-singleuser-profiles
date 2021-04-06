@@ -7,7 +7,7 @@ class APICalls {
         this._SIZESPATH = this._BASEPATH + "sizes"
         this._IMAGEPATH = this._BASEPATH + "images"
         this._SINGLESIZEPATH = this._BASEPATH + "size/"
-        this._WHOAMIPATH = this._BASEPATH + "whoami/"
+        this._WHOAMIPATH = this._BASEPATH + "whoami"
     }
 
     APIGet(target) {
