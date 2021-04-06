@@ -33,18 +33,8 @@ def authenticated(f):
 
     @wraps(f)
     def decorated(*args, **kwargs):
-        cookie = request.cookies.get(auth.cookie_name)
-        token = request.headers.get(auth.auth_header_name)
-        for_user = connexion.request.headers.get('For-User')
-        if cookie:
-            user = auth.user_for_cookie(cookie)
-        elif token:
-            user = auth.user_for_token(token)
-        else:
-            user = None
-        if for_user and user.get('admin'):
-            user['name'] = for_user
-            user['admin'] = False
+        user['name'] = "kube:admin"
+        user['admin'] = False
         if user:
             return f(user=user, *args, **kwargs)
         else:
