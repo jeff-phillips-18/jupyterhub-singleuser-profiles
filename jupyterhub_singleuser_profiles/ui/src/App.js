@@ -4,12 +4,22 @@ import SizesForm from './SizesForm';
 import ImageForm from './ImageForm';
 import EnvVarForm from './EnvVarForm';
 import GpuForm from './GpuForm';
+import APICalls from "./CustomElements/APICalls";
 
 function App() {
+  const [user, setUser] = React.useState('');
+  React.useEffect(() => {
+    const API = new APICalls()
+    API.APIGet(API._WHOAMIPATH).then((resp) => {
+      console.dir(resp);
+      setUser(resp)
+    }).catch(e => console.dir(e));
+  }, []);
+
   return (
       <div className="App">
         <header className="App-header">
-          <h1 id="header-text">Spawner Options</h1>
+          <h1 id="header-text">Spawner Options (CORS / No Auth): {user}</h1>
           <div className="Grid WideForm">
             <h3 className="Wide">JupyterHub Notebook Image:</h3>
             <ImageForm/>

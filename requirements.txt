@@ -4,6 +4,7 @@ requests
 jsonpath-rw
 connexion[swagger-ui]
 connexion
+flask-cors
 jinja2
 escapism
 tornado
