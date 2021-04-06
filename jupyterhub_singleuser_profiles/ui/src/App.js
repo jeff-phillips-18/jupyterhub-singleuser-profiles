@@ -12,7 +12,6 @@ function App() {
     const API = new APICalls()
     API.APIGet(API._WHOAMIPATH).then((resp) => {
       console.dir(resp);
-      setUser(resp)
     }).catch(e => console.dir(e));
   }, []);
 
