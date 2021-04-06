@@ -17,6 +17,8 @@ class APICalls {
             headers['For-User'] = target_user
         }
         return new Promise(function (resolve, reject) {
+            console.dir(target);
+            console.dir(headers);
             fetch(target,
                 {
                     method:'GET',

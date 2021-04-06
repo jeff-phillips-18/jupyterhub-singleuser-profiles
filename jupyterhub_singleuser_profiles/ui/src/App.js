@@ -19,7 +19,7 @@ function App() {
   return (
       <div className="App">
         <header className="App-header">
-          <h1 id="header-text">Spawner Options (CORS / No Auth): {user}</h1>
+          <h1 id="header-text">Spawner Options (CORS): {user}</h1>
           <div className="Grid WideForm">
             <h3 className="Wide">JupyterHub Notebook Image:</h3>
             <ImageForm/>
