@@ -4,7 +4,6 @@
 ./jupyterhub_singleuser_profiles/ui/node_modules
 
 # production
-./jupyterhub_singleuser_profiles/ui/build
 package-lock.json
 jupyterhub_singleuser_profiles/ui/build
 jupyterhub_singleuser_profiles/ui/node_modules
