@@ -12,8 +12,11 @@ const webpackCommon = require('./webpack.common.js');
 const RELATIVE_DIRNAME = process.env._JSP_RELATIVE_DIRNAME;
 const SRC_DIR = process.env._JSP_SRC_DIR;
 const DIST_DIR = process.env._JSP_DIST_DIR;
+const OUTPUT_ONLY = process.env._JSP_OUTPUT_ONLY;
 
-console.info(`Cleaning OUTPUT DIR...\n  ${DIST_DIR}\n`);
+if (OUTPUT_ONLY !== true) {
+  console.info(`Cleaning OUTPUT DIR...\n  ${DIST_DIR}\n`);
+}
 
 rimraf(DIST_DIR, () => {});
 

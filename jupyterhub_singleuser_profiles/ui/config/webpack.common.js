@@ -9,10 +9,13 @@ const IMAGES_DIRNAME = process.env._JSP_IMAGES_DIRNAME;
 const PUBLIC_PATH = process.env._JSP_PUBLIC_PATH;
 const SRC_DIR = process.env._JSP_SRC_DIR;
 const DIST_DIR = process.env._JSP_DIST_DIR;
+const OUTPUT_ONLY = process.env._JSP_OUTPUT_ONLY;
 
-console.info(
-  `\nPrepping files...\n  SRC DIR: ${SRC_DIR}\n  OUTPUT DIR: ${DIST_DIR}\n  PUBLIC PATH: ${PUBLIC_PATH}\n`
-);
+if (OUTPUT_ONLY !== true) {
+  console.info(
+    `\nPrepping files...\n  SRC DIR: ${SRC_DIR}\n  OUTPUT DIR: ${DIST_DIR}\n  PUBLIC PATH: ${PUBLIC_PATH}\n`
+  );
+}
 
 module.exports = env => {
   return {

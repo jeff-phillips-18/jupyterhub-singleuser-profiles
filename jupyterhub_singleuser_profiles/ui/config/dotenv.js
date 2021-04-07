@@ -15,7 +15,7 @@ const getTsCompilerOptions = directory => {
   let tsCompilerOptions = {};
 
   if (fs.existsSync(tsconfigFile)) {
-    const { compilerOptions = { outDir: './build', baseUrl: './src' } } = require(tsconfigFile);
+    const { compilerOptions = { outDir: './dist', baseUrl: './src' } } = require(tsconfigFile);
     tsCompilerOptions = compilerOptions;
   }
 
@@ -94,9 +94,10 @@ const setupDotenvFilesForEnv = ({ env }) => {
   const IMAGES_DIRNAME = process.env.JSP_IMAGES_DIRNAME || 'images';
   const PUBLIC_PATH = process.env.JSP_PUBLIC_PATH || '/';
   const SRC_DIR = path.resolve(RELATIVE_DIRNAME, process.env.JSP_SRC_DIR || TS_BASE_URL || 'src');
-  const DIST_DIR = path.resolve(RELATIVE_DIRNAME, process.env.JSP_DIST_DIR || TS_OUT_DIR || 'build');
+  const DIST_DIR = path.resolve(RELATIVE_DIRNAME, process.env.JSP_DIST_DIR || TS_OUT_DIR || 'dist');
   const HOST = process.env.JSP_HOST || 'localhost';
   const PORT = process.env.JSP_PORT || '7000';
+  const OUTPUT_ONLY = process.env._JSP_OUTPUT_ONLY === 'true';
 
   process.env._JSP_RELATIVE_DIRNAME = RELATIVE_DIRNAME;
   process.env._JSP_IMAGES_DIRNAME = IMAGES_DIRNAME;
@@ -105,6 +106,7 @@ const setupDotenvFilesForEnv = ({ env }) => {
   process.env._JSP_DIST_DIR = DIST_DIR;
   process.env._JSP_HOST = HOST;
   process.env._JSP_PORT = PORT;
+  process.env._JSP_OUTPUT_ONLY = OUTPUT_ONLY;
 };
 
 module.exports = { setupWebpackDotenvFilesForEnv, setupDotenvFilesForEnv };
