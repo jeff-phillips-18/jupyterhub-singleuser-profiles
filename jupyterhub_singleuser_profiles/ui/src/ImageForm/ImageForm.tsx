@@ -12,9 +12,6 @@ const ImageForm: React.FC = () => {
   const [imageList, setImageList] = React.useState<string[]>();
 
   const postChange = (text) => {
-    if (typeof text !== 'string') {
-      text = text.target.text;
-    }
     const json = JSON.stringify({ last_selected_image: text });
     APIPost(CM_PATH, json);
   };
@@ -23,6 +20,7 @@ const ImageForm: React.FC = () => {
     let cancelled = false;
     APIGet(CM_PATH).then((data: UserConfigMapType) => {
       if (!cancelled) {
+        console.log(`====== SEtting selected Value: ${data['last_selected_image']}`)
         setSelectedValue(data['last_selected_image'] || '');
       }
     });
@@ -39,6 +37,7 @@ const ImageForm: React.FC = () => {
   React.useEffect(() => {
     let cancelled = false;
 
+    console.log(`====== selected Value: ${selectedValue} : ${imageList?.length ?? 'waiting on images'}`);
     if (!imageList || selectedValue === undefined) {
       return;
     }
@@ -49,6 +48,7 @@ const ImageForm: React.FC = () => {
 
     APIGet(DEFAULT_IMAGE_PATH).then((data: string) => {
       if (!cancelled) {
+        console.log(`========  Selecting: ${data} =========`);
         setSelectedValue(data);
         postChange(data);
       }
