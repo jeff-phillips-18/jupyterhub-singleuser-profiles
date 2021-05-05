@@ -42,8 +42,6 @@ This part of the repository can NOT be run locally. It requires a cluster with J
 
 The UI is supported by a swagger API to which all of the requests are routed. For more information check the [API section of the documentation](../../docs/api.md)
 
-This UI was boostrapped with [Create React App](https://github.com/facebook/create-react-app). Due to the nature of the UI it is not possible to execute all of the commands mentioned in the instructions.
-
 ## Testing
 
 The UI is deployed together with Jupyterhub Singleuser Profiles. To test it it is only necessary to deploy jupyterhub singleuser profiles and open the spawner page.
@@ -52,4 +50,38 @@ Similarly, to test changes, it is neccessary to:
 1. change the needed CSS or JS files
 2. push the changes to a repository
 3. rewrite the target repository in the `jupyterhub-img` build
-4. start the build and redeploy the pods. 
+4. start the build and redeploy the pods.
+
+## Mock Mode
+The UI can be run in mock mode from this directory. First, create a local file `.env.development.local` with contents:
+```
+MOCK_MODE='true'
+```
+
+then run:
+
+```
+npm run build
+npm run start:dev
+```
+
+This is useful for basic UI testing but not for true interaction with the backend.
+
+
+## Easy Deployment
+
+To more easily deploy and test your changes, the https://github.com/vpavlin/jsp-wrapper.git repo was created.
+To deploy using the jsp wrapper you need to:
+1. Update the `__version__` in ‘jupyterhub_singleuser_profiles/version.py’ (so the build sees a version change)
+2. Commit your changes and push to your repository
+3. From the jsp-wrapper repository
+    ```
+    export GIT_USER=<git user name>
+    export NAMESPACE=redhat-ods-applications
+    export GIT_REF=<branch name>
+   
+    modify the Dockerfile to update user and brach to settings above
+   
+    make remote
+    ```
+This will deploy and build to your connected cluster. You can launch the UI from the jupyterhub DC in the `redhat-ods-applications` namespace.
