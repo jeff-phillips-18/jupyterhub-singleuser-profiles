@@ -19,6 +19,17 @@ const getForUser = () => {
   return null;
 };
 
+export const getSubmitURL = (): string => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const jhdata = window.jhdata;
+
+  if (jhdata?.['spawn-url']) {
+    return jhdata['spawn-url'];
+  }
+  return '';
+};
+
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const APIGet = (target: string): Promise<any> => {

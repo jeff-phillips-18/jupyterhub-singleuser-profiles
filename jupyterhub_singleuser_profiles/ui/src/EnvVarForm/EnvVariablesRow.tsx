@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, ButtonVariant, Select, SelectOption, SelectVariant } from '@patternfly/react-core';
 import { MinusCircleIcon } from '@patternfly/react-icons';
-import { CUSTOM_VARIABLE, VariableRow } from './types';
+import { CUSTOM_VARIABLE, EMPTY_KEY, VariableRow } from './types';
 import { EnvVarCategoryType, EnvVarType } from '../utils/types';
 import EnvVariablesVariable from './EnvVariablesVariable';
 
@@ -9,14 +9,14 @@ type EnvVariablesRowProps = {
   variableRow: VariableRow;
   categories: EnvVarCategoryType[];
   onUpdate: (updatedRow?: VariableRow) => void;
-  onBlur: () => void;
+  onSave: () => void;
 };
 
 const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
   variableRow,
   categories,
   onUpdate,
-  onBlur,
+  onSave,
 }) => {
   const [typeDropdownOpen, setTypeDropdownOpen] = React.useState<boolean>(false);
   const categoryOptions = categories.map((category) => (
@@ -29,6 +29,7 @@ const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
 
   const removeVariables = () => {
     onUpdate();
+    onSave();
   };
 
   const updateVariable = (updatedVariable: EnvVarType, originalName: string) => {
@@ -45,15 +46,25 @@ const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
   };
 
   const updateVariableType = (newType: string) => {
+    console.log(`Updating variable type: ${variableRow.variableType} -> ${newType}`);
+    if (variableRow.variableType === newType) {
+      setTypeDropdownOpen(false);
+      return;
+    }
     const newCategory = categories.find((category) => category.name === newType);
-    const variables =
-      newCategory?.variables.map((variable) => {
-        return {
-          name: variable.name,
-          type: variable.type,
-          value: '',
-        };
-      }) ?? [];
+    const variables = newCategory?.variables.map((variable) => {
+      return {
+        name: variable.name,
+        type: variable.type,
+        value: '',
+      };
+    }) ?? [
+      {
+        name: EMPTY_KEY,
+        type: 'text',
+        value: '',
+      },
+    ];
 
     const updatedRow: VariableRow = {
       variableType: newType,
@@ -62,6 +73,7 @@ const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
     };
 
     onUpdate(updatedRow);
+    onSave();
     setTypeDropdownOpen(false);
   };
 
@@ -91,7 +103,7 @@ const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
           variable={variable}
           variableRow={variableRow}
           onUpdateVariable={(updatedVariable) => updateVariable(updatedVariable, variable.name)}
-          onBlur={onBlur}
+          onSave={onSave}
         />
       ))}
     </div>

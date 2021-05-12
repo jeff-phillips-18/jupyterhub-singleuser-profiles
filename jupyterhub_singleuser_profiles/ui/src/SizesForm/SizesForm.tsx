@@ -20,6 +20,7 @@ const SizesForm: React.FC<ImageFormProps> = ({ uiConfig }) => {
   const [selectedSize, setSelectedSize] = React.useState<string>('Default');
   const [selectedGpu, setSelectedGpu] = React.useState<string>('0');
 
+  console.dir(uiConfig);
   const postSizeChange = (text: string): Promise<void> => {
     setSelectedSize(text);
     setSizeDropdownOpen(false);

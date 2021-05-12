@@ -24,9 +24,7 @@
       Error: {{error_message}}
     </p>
   {% endif %}
-  <form enctype="multipart/form-data" id="spawn_form" action="{{url}}" method="post" role="form" >
-    {{spawner_options_form | safe}}
-  </form>
+  {{spawner_options_form | safe}}
 </div>
 
 {% endblock %}

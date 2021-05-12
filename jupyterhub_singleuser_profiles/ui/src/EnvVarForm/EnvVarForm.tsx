@@ -112,7 +112,7 @@ const EnvVarForm: React.FC<ImageFormProps> = ({ uiConfig }) => {
         categories={uiConfig.envVarConfig?.categories || []}
         variableRow={row}
         onUpdate={(updatedRow) => onUpdateRow(index, updatedRow)}
-        onBlur={postEnvChange}
+        onSave={postEnvChange}
       />
     ));
   };

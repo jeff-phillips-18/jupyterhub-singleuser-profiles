@@ -15,13 +15,13 @@ type EnvVariablesVariableProps = {
   variable: EnvVarType;
   variableRow: VariableRow;
   onUpdateVariable: (updatedVariable: EnvVarType) => void;
-  onBlur: () => void;
+  onSave: () => void;
 };
 
 const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
   variable,
   onUpdateVariable,
-  onBlur,
+  onSave,
   variableRow,
 }) => {
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
@@ -34,7 +34,7 @@ const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
   const handleSecretChange = (checked) => {
     variable.type = checked ? 'password' : 'text';
     setVariableType(variable.type);
-    onBlur();
+    onSave();
   };
 
   const validated = variableRow.errors[variable.name] !== undefined ? 'error' : 'default';
@@ -55,13 +55,10 @@ const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
           }
           value={variable.name === EMPTY_KEY ? '' : variable.name}
           validated={validated}
-          onBlur={onBlur}
+          onBlur={onSave}
         />
       </FormGroup>
-      <FormGroup
-        fieldId={`${variable.name}-value`}
-        label="Variable value"
-      >
+      <FormGroup fieldId={`${variable.name}-value`} label="Variable value">
         <div className="jsp-spawner__env-var-form__var-row__vars__value">
           <TextInput
             id={`${variable.name}-value`}
@@ -74,7 +71,7 @@ const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
             onChange={(newValue) =>
               onUpdateVariable({ name: variable.name, type: variable.type, value: newValue })
             }
-            onBlur={onBlur}
+            onBlur={onSave}
           />
           {variable.type === 'password' ? (
             <Button

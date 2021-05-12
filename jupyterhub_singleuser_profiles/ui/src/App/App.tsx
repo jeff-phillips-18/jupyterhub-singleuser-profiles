@@ -4,8 +4,8 @@ import './App.scss';
 import ImageForm from '../ImageForm/ImageForm';
 import SizesForm from '../SizesForm/SizesForm';
 import EnvVarForm from '../EnvVarForm/EnvVarForm';
-import { APIGet } from '../utils/APICalls';
-import { UI_CONFIG_PATH } from '../utils/const';
+import { APIGet, getSubmitURL } from '../utils/APICalls';
+import { MOCK_MODE, UI_CONFIG_PATH } from '../utils/const';
 import { UiConfigType } from '../utils/types';
 
 const App: React.FC = () => {
@@ -30,7 +30,16 @@ const App: React.FC = () => {
     return null;
   }
 
-  return (
+  const handleSubmit = (): boolean => {
+    console.log(`------ Submit -----`);
+    return true;
+  };
+
+  const handleClick = () => {
+    console.log(`------ Click -----`);
+  };
+
+  const spawnerUI = (
     <div className="jsp-spawner">
       <div className="jsp-spawner__header">
         <div className="jsp-spawner__header__title">Start a notebook server</div>
@@ -46,10 +55,24 @@ const App: React.FC = () => {
           type="submit"
           value="Start server"
           className="jsp-spawner__submit-button pf-c-button pf-m-primary"
+          onClick={() => handleClick()}
+          onSubmit={() => handleSubmit()}
         />
       </div>
     </div>
   );
+  return (
+    <form
+      encType="multipart/form-data"
+      id="spawn_form"
+      action={getSubmitURL()}
+      method="post"
+      role="form"
+    >
+      {spawnerUI}
+    </form>
+  );
+  return spawnerUI;
 };
 
 export default App;
