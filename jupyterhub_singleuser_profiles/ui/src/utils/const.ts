@@ -10,3 +10,10 @@ export const IMAGE_PATH = 'images';
 export const DEFAULT_IMAGE_PATH = 'images/default';
 export const UI_CONFIG_PATH = 'ui/config';
 export const SINGLE_SIZE_PATH = 'size';
+
+export const HUB_PATH = '/hub/api';
+export const SPAWN_PATH = 'users';
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+export const USER = DEV_MODE ? 'devuser' : window.jhdata?.['user'] ?? '';

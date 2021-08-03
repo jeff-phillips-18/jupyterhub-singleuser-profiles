@@ -22,11 +22,12 @@ const EnvVarForm: React.FC<ImageFormProps> = ({ uiConfig }) => {
     APIGet(CM_PATH).then((data: UserConfigMapType) => {
       if (!cancelled) {
         const env = data.env;
-        const rows: VariableRow[] = env.map((variable) => ({
-          variableType: CUSTOM_VARIABLE,
-          variables: [variable],
-          errors: {},
-        }));
+        const rows: VariableRow[] =
+          env?.map((variable) => ({
+            variableType: CUSTOM_VARIABLE,
+            variables: [variable],
+            errors: {},
+          })) ?? [];
         setVariableRows(rows);
         setSavedEnvJson(JSON.stringify({ env }));
       }

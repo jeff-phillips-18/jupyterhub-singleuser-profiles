@@ -1,6 +1,9 @@
 import React from 'react';
 import '@patternfly/patternfly/patternfly.min.css';
+import '@patternfly/patternfly/patternfly-addons.css';
 import {
+  Button,
+  ButtonVariant,
   Title,
   EmptyState,
   EmptyStateVariant,
@@ -13,16 +16,29 @@ import ImageForm from '../ImageForm/ImageForm';
 import SizesForm from '../SizesForm/SizesForm';
 import EnvVarForm from '../EnvVarForm/EnvVarForm';
 import { APIGet } from '../utils/APICalls';
+import { HubUserRequest } from '../utils/HubCalls';
 import { UI_CONFIG_PATH } from '../utils/const';
 import { UiConfigType } from '../utils/types';
+import StartServerModal from './StartServerModal';
 
 import './App.scss';
 
 const App: React.FC = () => {
   const [uiConfig, setUiConfig] = React.useState<UiConfigType>();
   const [configError, setConfigError] = React.useState<string>();
+  const [startShown, setStartShown] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     let cancelled = false;
+    HubUserRequest('GET', 'server/progress')
+      .then((response) => {
+        if (response?.status !== 400) {
+          setStartShown(true);
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
 
     APIGet(UI_CONFIG_PATH)
       .then((data: UiConfigType) => {
@@ -31,7 +47,7 @@ const App: React.FC = () => {
         }
       })
       .catch((e) => {
-        console.dir(e);
+        console.error(e);
         setConfigError(e);
       });
 
@@ -67,11 +83,13 @@ const App: React.FC = () => {
         <SizesForm uiConfig={uiConfig} />
         {uiConfig.envVarConfig?.enabled !== false && <EnvVarForm uiConfig={uiConfig} />}
         <div className="jsp-spawner__buttons-bar">
-          <input
-            type="submit"
-            value="Start server"
-            className="jsp-spawner__submit-button pf-c-button pf-m-primary"
-          />
+          <Button
+            variant={ButtonVariant.primary}
+            className="jsp-spawner__submit-button"
+            onClick={() => setStartShown(true)}
+          >
+            Start Server
+          </Button>
         </div>
       </>
     );
@@ -86,6 +104,9 @@ const App: React.FC = () => {
         </div>
       </div>
       {renderContent()}
+      {startShown ? (
+        <StartServerModal shown={startShown} onClose={() => setStartShown(false)} />
+      ) : null}
     </div>
   );
 };

@@ -63,11 +63,18 @@
     margin-left: var(--pf-global--spacer--2xl);
   }
 
+  //
   // add specificity to prevent bootstrap overrides
+  //
+
   .pf-c-check__input {
     margin-top: var(--pf-c-check__input--MarginTop);
   }
   .pf-c-radio__input {
     margin-top: var(--pf-c-radio__input--MarginTop);
+  }
+
+  .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    line-height: var(--pf-global--LineHeight--md);
   }
 }
