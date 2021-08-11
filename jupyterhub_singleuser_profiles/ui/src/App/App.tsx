@@ -80,7 +80,7 @@ const App: React.FC = () => {
   return (
     <div className="jsp-spawner">
       <div className="jsp-spawner__header">
-        <div className="jsp-spawner__header__title">Start a notebook server</div>
+        <div className="jsp-spawner__header__title">Start a notebook server -- JEFF</div>
         <div className="jsp-spawner__header__sub-title">
           Select options for your notebook server.
         </div>
