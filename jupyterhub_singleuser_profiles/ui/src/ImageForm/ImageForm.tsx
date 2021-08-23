@@ -32,6 +32,7 @@ const ImageForm: React.FC<ImageFormProps> = () => {
 
   const postChange = (text) => {
     const json = JSON.stringify({ last_selected_image: text });
+    console.log(JSON.stringify({ last_selected_image: text }, null, 2));
     APIPost(CM_PATH, json);
   };
 
@@ -113,11 +114,11 @@ const ImageForm: React.FC<ImageFormProps> = () => {
           }
 
           // No defaults, choose the first valid image and tag
-          setFirstValidImage();
+          // setFirstValidImage();
         }
       })
       .catch(() => {
-        setFirstValidImage();
+        // setFirstValidImage();
       });
 
     return () => {

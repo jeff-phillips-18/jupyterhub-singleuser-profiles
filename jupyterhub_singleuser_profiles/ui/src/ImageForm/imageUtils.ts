@@ -49,7 +49,7 @@ export const getDescriptionForTag = (imageTag?: ImageTagType): string => {
 };
 
 export const getDefaultTag = (image: ImageType): ImageTagType | undefined => {
-  if (!image.tags) {
+  if (!image.tags?.length) {
     return undefined;
   }
 
