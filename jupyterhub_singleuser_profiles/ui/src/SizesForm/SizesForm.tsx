@@ -10,9 +10,10 @@ const MAX_GPUS = 10;
 
 type ImageFormProps = {
   uiConfig: UiConfigType;
+  userConfig: UserConfigMapType;
 };
 
-const SizesForm: React.FC<ImageFormProps> = ({ uiConfig }) => {
+const SizesForm: React.FC<ImageFormProps> = ({ uiConfig, userConfig }) => {
   const [sizeDropdownOpen, setSizeDropdownOpen] = React.useState<boolean>(false);
   const [gpuDropdownOpen, setGpuDropdownOpen] = React.useState<boolean>(false);
   const [sizeList, setSizeList] = React.useState<string[]>();
@@ -36,12 +37,6 @@ const SizesForm: React.FC<ImageFormProps> = ({ uiConfig }) => {
 
   React.useEffect(() => {
     let cancelled = false;
-    APIGet(CM_PATH).then((data: UserConfigMapType) => {
-      if (!cancelled) {
-        setSelectedSize(data.last_selected_size);
-        setSelectedGpu(`${data.gpu}`);
-      }
-    });
     APIGet(SIZES_PATH).then((data: string[]) => {
       if (!cancelled) {
         setSizeList(data);
@@ -51,6 +46,13 @@ const SizesForm: React.FC<ImageFormProps> = ({ uiConfig }) => {
       cancelled = true;
     };
   }, []);
+
+  React.useEffect(() => {
+    if (userConfig) {
+      setSelectedSize(userConfig.last_selected_size);
+      setSelectedGpu(`${userConfig.gpu}`);
+    }
+  }, [userConfig]);
 
   React.useEffect(() => {
     let cancelled = false;

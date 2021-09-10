@@ -16,6 +16,7 @@ import './ImageForm.scss';
 
 type ImageFormProps = {
   uiConfig: UiConfigType;
+  userConfig: UserConfigMapType;
 };
 
 const getValuesFromImageName = (imageName: string): { image: string; tag: string } => {
@@ -26,7 +27,7 @@ const getValuesFromImageName = (imageName: string): { image: string; tag: string
   };
 };
 
-const ImageForm: React.FC<ImageFormProps> = () => {
+const ImageForm: React.FC<ImageFormProps> = ({ userConfig }) => {
   const [selectedImageTag, setSelectedImageTag] = React.useState<{ image: string; tag: string }>();
   const [imageList, setImageList] = React.useState<ImageType[]>();
 
@@ -37,11 +38,6 @@ const ImageForm: React.FC<ImageFormProps> = () => {
 
   React.useEffect(() => {
     let cancelled = false;
-    APIGet(CM_PATH).then((data: UserConfigMapType) => {
-      if (!cancelled) {
-        setSelectedImageTag(getValuesFromImageName(data['last_selected_image']));
-      }
-    });
     APIGet(IMAGE_PATH).then((data: ImageType[]) => {
       if (!cancelled) {
         setImageList(data.sort((a, b) => a.order - b.order));
@@ -56,14 +52,17 @@ const ImageForm: React.FC<ImageFormProps> = () => {
     let cancelled = false;
 
     // Wait until we have both
-    if (!imageList || selectedImageTag === undefined) {
+    if (!imageList || !userConfig) {
       return;
     }
 
+    const prevSelectedImageTag = getValuesFromImageName(userConfig.last_selected_image);
+
     // If the previous are valid, we are good
-    const currentImage = imageList.find((image) => image.name === selectedImageTag.image);
-    const currentTag = currentImage?.tags?.find((tag) => tag.name === selectedImageTag.tag);
+    const currentImage = imageList.find((image) => image.name === prevSelectedImageTag.image);
+    const currentTag = currentImage?.tags?.find((tag) => tag.name === prevSelectedImageTag.tag);
     if (currentImage && currentTag) {
+      setSelectedImageTag(prevSelectedImageTag);
       return;
     }
 
@@ -123,7 +122,7 @@ const ImageForm: React.FC<ImageFormProps> = () => {
     return () => {
       cancelled = true;
     };
-  }, [selectedImageTag, imageList]);
+  }, [userConfig, imageList]);
 
   const handleSelection = (image: ImageType, tag: string, checked: boolean) => {
     if (checked) {
