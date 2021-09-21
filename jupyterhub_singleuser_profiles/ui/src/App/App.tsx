@@ -21,6 +21,8 @@ import './App.scss';
 const App: React.FC = () => {
   const [uiConfig, setUiConfig] = React.useState<UiConfigType>();
   const [configError, setConfigError] = React.useState<string>();
+  const [imageValid, setImageValid] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     let cancelled = false;
 
@@ -63,12 +65,13 @@ const App: React.FC = () => {
 
     return (
       <>
-        <ImageForm uiConfig={uiConfig} />
+        <ImageForm uiConfig={uiConfig} onValidImage={() => setImageValid(true)} />
         <SizesForm uiConfig={uiConfig} />
         {uiConfig.envVarConfig?.enabled !== false && <EnvVarForm uiConfig={uiConfig} />}
         <div className="jsp-spawner__buttons-bar">
           <input
             type="submit"
+            disabled={!imageValid}
             value="Start server"
             className="jsp-spawner__submit-button pf-c-button pf-m-primary"
           />
