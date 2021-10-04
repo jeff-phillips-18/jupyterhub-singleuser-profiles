@@ -1,6 +1,9 @@
 import React from 'react';
 import '@patternfly/patternfly/patternfly.min.css';
+import '@patternfly/patternfly/patternfly-addons.css';
 import {
+  Button,
+  ButtonVariant,
   Title,
   EmptyState,
   EmptyStateVariant,
@@ -13,7 +16,7 @@ import ImageForm from '../ImageForm/ImageForm';
 import SizesForm from '../SizesForm/SizesForm';
 import EnvVarForm from '../EnvVarForm/EnvVarForm';
 import { APIGet } from '../utils/APICalls';
-import { CM_PATH, UI_CONFIG_PATH } from '../utils/const';
+import { CM_PATH, UI_CONFIG_PATH, USER } from '../utils/const';
 import { UiConfigType, UserConfigMapType } from '../utils/types';
 
 import './App.scss';
@@ -40,7 +43,7 @@ const App: React.FC = () => {
         }
       })
       .catch((e) => {
-        console.dir(e);
+        console.error(e);
         setConfigError(e);
       });
 
@@ -98,7 +101,9 @@ const App: React.FC = () => {
       <div className="jsp-spawner__header">
         <div className="jsp-spawner__header__title">Start a notebook server</div>
         <div className="jsp-spawner__header__sub-title">
-          Select options for your notebook server.
+          {USER
+            ? `Select options for ${USER}'s notebook server`
+            : 'Select options for your notebook server.'}
         </div>
       </div>
       {renderContent()}
