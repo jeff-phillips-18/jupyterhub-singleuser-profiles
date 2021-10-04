@@ -4,6 +4,9 @@
 # production
 /build
 
+# Created templates
+/templates
+
 *stats.json
 
 .env*.local

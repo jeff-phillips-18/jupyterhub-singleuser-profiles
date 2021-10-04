@@ -18,6 +18,7 @@
   },
   "scripts": {
     "build": "run-s build:prod",
+    "postbuild": "mkdir -p templates; cp build/index.html templates/spawn.html; cp build/index.html templates/spawn_pending.html; cp build/adminIndex.html templates/admin.html",
     "build:analyze": "export _JSP_OUTPUT_ONLY=true; run-s build build:bundle-profile build:bundle-analyze",
     "build:bundle-profile": "webpack --config ./config/webpack.prod.js --json ./bundle.stats.json",
     "build:bundle-analyze": "webpack-bundle-analyzer ./bundle.stats.json",
@@ -35,11 +36,11 @@
     "test:type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@patternfly/patternfly": "4.87.3",
-    "@patternfly/react-core": "4.97.2",
+    "@patternfly/patternfly": "4.137.0",
+    "@patternfly/react-core": "4.123.0",
     "@patternfly/react-icons": "4.9.2",
     "@patternfly/react-styles": "4.8.2",
-    "@patternfly/react-table": "^4.23.2",
+    "@patternfly/react-table": "^4.27.13",
     "@patternfly/react-tokens": "^4.10.2",
     "classnames": "^2.2.6",
     "compare-versions": "^3.6.0",

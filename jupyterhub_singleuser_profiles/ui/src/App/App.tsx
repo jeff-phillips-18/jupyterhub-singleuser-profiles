@@ -1,6 +1,9 @@
 import React from 'react';
 import '@patternfly/patternfly/patternfly.min.css';
+import '@patternfly/patternfly/patternfly-addons.css';
 import {
+  Button,
+  ButtonVariant,
   Title,
   EmptyState,
   EmptyStateVariant,
@@ -15,6 +18,8 @@ import EnvVarForm from '../EnvVarForm/EnvVarForm';
 import { APIGet } from '../utils/APICalls';
 import { CM_PATH, UI_CONFIG_PATH } from '../utils/const';
 import { UiConfigType, UserConfigMapType } from '../utils/types';
+import { HubUserRequest } from '../utils/HubCalls';
+import StartServerModal from './StartServerModal';
 
 import './App.scss';
 
@@ -23,9 +28,21 @@ const App: React.FC = () => {
   const [configError, setConfigError] = React.useState<string>();
   const [imageValid, setImageValid] = React.useState<boolean>(false);
   const [userConfig, setUserConfig] = React.useState<UserConfigMapType>();
+  const [startShown, setStartShown] = React.useState<boolean>(false);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const pageRef = React.useRef<any>();
 
   React.useEffect(() => {
     let cancelled = false;
+    HubUserRequest('GET', 'server/progress')
+      .then((response) => {
+        if (response?.status !== 400) {
+          setStartShown(true);
+        }
+      })
+      .catch((e) => {
+        console.error(e.message);
+      });
 
     APIGet(CM_PATH).then((data: UserConfigMapType) => {
       if (!cancelled) {
@@ -40,7 +57,7 @@ const App: React.FC = () => {
         }
       })
       .catch((e) => {
-        console.dir(e);
+        console.error(e);
         setConfigError(e);
       });
 
@@ -82,19 +99,21 @@ const App: React.FC = () => {
           <EnvVarForm uiConfig={uiConfig} userConfig={userConfig} />
         )}
         <div className="jsp-spawner__buttons-bar">
-          <input
-            type="submit"
+          <Button
+            variant={ButtonVariant.primary}
             disabled={!imageValid}
-            value="Start server"
-            className="jsp-spawner__submit-button pf-c-button pf-m-primary"
-          />
+            className="jsp-spawner__submit-button"
+            onClick={() => setStartShown(true)}
+          >
+            Start Server
+          </Button>
         </div>
       </>
     );
   };
 
   return (
-    <div className="jsp-spawner">
+    <div className="jsp-spawner" ref={pageRef}>
       <div className="jsp-spawner__header">
         <div className="jsp-spawner__header__title">Start a notebook server</div>
         <div className="jsp-spawner__header__sub-title">
@@ -102,6 +121,13 @@ const App: React.FC = () => {
         </div>
       </div>
       {renderContent()}
+      {startShown ? (
+        <StartServerModal
+          pageRef={pageRef.current}
+          shown={startShown}
+          onClose={() => setStartShown(false)}
+        />
+      ) : null}
     </div>
   );
 };
