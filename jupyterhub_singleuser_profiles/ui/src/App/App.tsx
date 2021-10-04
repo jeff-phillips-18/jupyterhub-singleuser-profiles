@@ -16,7 +16,7 @@ import ImageForm from '../ImageForm/ImageForm';
 import SizesForm from '../SizesForm/SizesForm';
 import EnvVarForm from '../EnvVarForm/EnvVarForm';
 import { APIGet } from '../utils/APICalls';
-import { CM_PATH, UI_CONFIG_PATH } from '../utils/const';
+import { CM_PATH, UI_CONFIG_PATH, USER } from '../utils/const';
 import { UiConfigType, UserConfigMapType } from '../utils/types';
 import { HubUserRequest } from '../utils/HubCalls';
 import StartServerModal from './StartServerModal';
@@ -29,7 +29,7 @@ const App: React.FC = () => {
   const [imageValid, setImageValid] = React.useState<boolean>(false);
   const [userConfig, setUserConfig] = React.useState<UserConfigMapType>();
   const [startShown, setStartShown] = React.useState<boolean>(false);
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const pageRef = React.useRef<any>();
 
   React.useEffect(() => {
@@ -117,7 +117,9 @@ const App: React.FC = () => {
       <div className="jsp-spawner__header">
         <div className="jsp-spawner__header__title">Start a notebook server</div>
         <div className="jsp-spawner__header__sub-title">
-          Select options for your notebook server.
+          {USER
+            ? `Select options for ${USER}'s notebook server`
+            : 'Select options for your notebook server.'}
         </div>
       </div>
       {renderContent()}

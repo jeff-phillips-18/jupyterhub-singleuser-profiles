@@ -1,5 +1,4 @@
 export const DEV_MODE = process.env.APP_ENV === 'development';
-export const DEV_APP = process.env.DEV_APP || 'spawner';
 export const DEV_SERVER = process.env.DEV_SERVER || '';
 export const MOCK_MODE = process.env.MOCK_MODE === 'true';
 export const ABOUT_NOTEBOOK_IMAGES_LINK = process.env.ABOUT_NOTEBOOK_IMAGES_LINK || '';
@@ -21,4 +20,4 @@ export const SHUTDOWN_PATH = '/shutdown';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-export const USER = DEV_MODE ? 'devuser' : window.jhdata?.['user'] ?? '';
+export const USER = DEV_MODE ? 'devuser' : window.jhdata?.['for_user'] ?? '';

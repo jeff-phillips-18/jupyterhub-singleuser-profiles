@@ -5,7 +5,7 @@ import {
   MOCK_MODE,
   SHUTDOWN_PATH,
   USER,
-  USERS_PATH
+  USERS_PATH,
 } from './const';
 import { getMockProgress, mockData } from '../__mock__/mockData';
 

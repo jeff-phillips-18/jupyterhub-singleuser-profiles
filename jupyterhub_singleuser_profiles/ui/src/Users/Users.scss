@@ -1,0 +1,30 @@
+.jsp-admin__users {
+  &__learn-more {
+    margin-left: var(--pf-global--spacer--sm);
+    svg {
+      margin-left: var(--pf-global--spacer--xs);
+    }
+  }
+  &__table-body {
+    max-height: 575px;
+    overflow-y: auto;
+    .pf-c-table__button-content {
+      align-items: center;
+    }
+  }
+  &__pagination {
+    align-items: center;
+    margin-top: var(--pf-global--spacer--sm);
+    padding-right: var(--pf-global--spacer--md);
+    .pf-c-pagination__nav {
+      align-items: center;
+    }
+  }
+  &__server-button {
+    display: flex;
+    justify-content: flex-end;
+    .pf-c-button {
+      margin-right: calc(-1 * var(--pf-global--spacer--md));
+    }
+  }
+}
