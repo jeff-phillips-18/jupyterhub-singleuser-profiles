@@ -33,6 +33,7 @@ const App: React.FC = () => {
   const pageRef = React.useRef<any>();
 
   React.useEffect(() => {
+    console.log(`Spawn URL: ${(window as any).jhdata['spawn-url']}`);
     let cancelled = false;
     HubUserRequest('GET', 'server/progress')
       .then((response) => {
