@@ -112,12 +112,12 @@ const EnvVarForm: React.FC<ImageFormProps> = ({ uiConfig, userConfig }) => {
   };
 
   return (
-    <div className="jsp-spawner__option-section">
-      <Form className="jsp-spawner__env-var-form">
-        <div className="jsp-spawner__option-section__title">Environment variables</div>
+    <div className="jsp-app__option-section">
+      <Form className="jsp-app__spawner__env-var-form">
+        <div className="jsp-app__option-section__title">Environment variables</div>
         {renderRows()}
         <Button
-          className="jsp-spawner__env-var-form__add-button"
+          className="jsp-app__spawner__env-var-form__add-button"
           variant={ButtonVariant.link}
           onClick={addVariableRow}
         >

@@ -39,7 +39,7 @@ const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
 
   const validated = variableRow.errors[variable.name] !== undefined ? 'error' : 'default';
   return (
-    <div className="jsp-spawner__env-var-form__var-row__vars">
+    <div className="jsp-app__spawner__env-var-form__var-row__vars">
       <FormGroup
         fieldId={variable.name}
         label="Variable name"
@@ -59,7 +59,7 @@ const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
         />
       </FormGroup>
       <FormGroup fieldId={`${variable.name}-value`} label="Variable value">
-        <div className="jsp-spawner__env-var-form__var-row__vars__value">
+        <div className="jsp-app__spawner__env-var-form__var-row__vars__value">
           <TextInput
             id={`${variable.name}-value`}
             type={
@@ -75,7 +75,7 @@ const EnvVariablesVariable: React.FC<EnvVariablesVariableProps> = ({
           />
           {variable.type === 'password' ? (
             <Button
-              className="jsp-spawner__env-var-form__toggle-password-vis"
+              className="jsp-app__spawner__env-var-form__toggle-password-vis"
               variant={ButtonVariant.link}
               onClick={() => setShowPassword(!showPassword)}
             >

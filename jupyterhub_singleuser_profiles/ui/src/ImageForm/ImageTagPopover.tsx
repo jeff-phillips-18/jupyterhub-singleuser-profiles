@@ -17,7 +17,7 @@ const ImageTagPopover: React.FC<ImageTagPopoverProps> = ({ tag, description }) =
   }
   return (
     <Popover
-      className="jsp-spawner__image-options__packages-popover"
+      className="jsp-app__spawner__image-options__packages-popover"
       isVisible={isVisible}
       shouldOpen={(show, event) => {
         event?.preventDefault();
@@ -31,19 +31,19 @@ const ImageTagPopover: React.FC<ImageTagPopoverProps> = ({ tag, description }) =
       bodyContent={
         <>
           {description ? (
-            <span className="jsp-spawner__image-options__packages-popover__title">
+            <span className="jsp-app__spawner__image-options__packages-popover__title">
               {description}
             </span>
           ) : null}
           {dependencies.length > 0 ? (
             <>
-              <span className="jsp-spawner__image-options__packages-popover__package-title">
+              <span className="jsp-app__spawner__image-options__packages-popover__package-title">
                 Packages included:
               </span>
               {dependencies.map((dependency) => (
                 <span
                   key={dependency.name}
-                  className="jsp-spawner__image-options__packages-popover__package"
+                  className="jsp-app__spawner__image-options__packages-popover__package"
                 >
                   {getNameVersionString(dependency)}
                 </span>

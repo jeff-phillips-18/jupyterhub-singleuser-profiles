@@ -66,9 +66,9 @@ const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
   };
 
   return (
-    <div className="jsp-spawner__env-var-form__var-row">
+    <div className="jsp-app__spawner__env-var-form__var-row">
       <Select
-        className="jsp-spawner__size_options__select"
+        className="jsp-app__spawner__size_options__select"
         variant={SelectVariant.single}
         isOpen={typeDropdownOpen}
         onToggle={() => setTypeDropdownOpen(!typeDropdownOpen)}
@@ -79,7 +79,7 @@ const EnvVariablesRow: React.FC<EnvVariablesRowProps> = ({
         {selectOptions}
       </Select>
       <Button
-        className="jsp-spawner__env-var-form__var-row__remove"
+        className="jsp-app__spawner__env-var-form__var-row__remove"
         variant={ButtonVariant.link}
         onClick={removeVariables}
       >

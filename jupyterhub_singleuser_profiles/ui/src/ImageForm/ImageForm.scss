@@ -1,4 +1,4 @@
-.jsp-spawner__image-options {
+.jsp-app__spawner__image-options {
   @media (min-width: 768px) {
     display: flex;
     flex-direction: row;
@@ -39,7 +39,7 @@
   }
   &__tag-versions {
     margin: 0 var(--pf-global--spacer--md);
-    .jsp-spawner__image-options__option:not(:last-of-type) {
+    .jsp-app__spawner__image-options__option:not(:last-of-type) {
       margin-bottom: var(--pf-global--spacer--sm);
     }
     .pf-c-label {

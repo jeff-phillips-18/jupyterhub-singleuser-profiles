@@ -34,22 +34,22 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
   };
 
   const disabled = tags.every((tag) => !isImageTagBuildValid(tag));
-  const optionClasses = classNames('jsp-spawner__image-options__option', {
+  const optionClasses = classNames('jsp-app__spawner__image-options__option', {
     'm-is-disabled': disabled,
   });
 
   return (
-    <div className="jsp-spawner__image-options__image">
+    <div className="jsp-app__spawner__image-options__image">
       <Radio
         id={image.name}
         name={image.display_name}
         className={optionClasses}
         isDisabled={disabled}
         label={
-          <span className="jsp-spawner__image-options__title">
+          <span className="jsp-app__spawner__image-options__title">
             {image.display_name}
             {tags.length > 1 ? (
-              <span className="jsp-spawner__image-options__title-version">
+              <span className="jsp-app__spawner__image-options__title-version">
                 {getImageTagVersion(image, selectedImage, selectedTag)}
               </span>
             ) : null}

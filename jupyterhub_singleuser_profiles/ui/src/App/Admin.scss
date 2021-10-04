@@ -1,0 +1,12 @@
+.jsp-app__admin {
+  &__buttons-bar {
+
+    .pf-c-button {
+      margin-left: var(--pf-global--spacer--md);
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+}

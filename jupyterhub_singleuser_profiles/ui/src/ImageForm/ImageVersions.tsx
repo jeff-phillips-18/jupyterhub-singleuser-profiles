@@ -24,16 +24,16 @@ const ImageVersions: React.FC<ImageVersionsProps> = ({ image, selectedTag, onSel
   }
 
   return (
-    <div className="jsp-spawner__image-options__tags">
+    <div className="jsp-app__spawner__image-options__tags">
       <Button variant={ButtonVariant.tertiary} onClick={() => setOpen(!open)}>
         {open ? <AngleDownIcon /> : <AngleRightIcon />}
         Versions
       </Button>
       {open ? (
-        <div className="jsp-spawner__image-options__tag-versions">
+        <div className="jsp-app__spawner__image-options__tag-versions">
           {image.tags.sort(compareTagVersions).map((tag) => {
             const disabled = !isImageTagBuildValid(tag);
-            const classes = classNames('jsp-spawner__image-options__option', {
+            const classes = classNames('jsp-app__spawner__image-options__option', {
               'm-is-disabled': disabled,
             });
             return (
@@ -44,7 +44,7 @@ const ImageVersions: React.FC<ImageVersionsProps> = ({ image, selectedTag, onSel
                 className={classes}
                 isDisabled={disabled}
                 label={
-                  <span className="jsp-spawner__image-options__title">
+                  <span className="jsp-app__spawner__image-options__title">
                     Version{` ${getVersion(tag.name)}`}
                     <ImageTagPopover tag={tag} />
                     {tag.recommended ? (
