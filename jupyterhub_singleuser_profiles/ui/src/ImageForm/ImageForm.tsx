@@ -39,6 +39,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
 
   const postChange = React.useCallback(
     (text) => {
+      console.log(`Update Config: ${text}`);
       const json = JSON.stringify({ last_selected_image: text });
       APIPost(CM_PATH, json).then(() => onValidImage && onValidImage());
     },
@@ -54,12 +55,16 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
     }
 
     const prevSelectedImageTag = getValuesFromImageName(userConfig.last_selected_image);
+    console.log(`Previous Config: `, userConfig);
+    console.log(`ImageList: `, imageList);
 
     // If the previous are valid, we are good
     const currentImage = imageList.find((image) => image.name === prevSelectedImageTag?.image);
     const currentTag = currentImage?.tags?.find((tag) => tag.name === prevSelectedImageTag?.tag);
+    console.log(`current: ${currentImage?.name}:${currentTag?.name}`);
     if (currentImage && currentTag) {
       setSelectedImageTag(prevSelectedImageTag);
+      postChange(userConfig.last_selected_image);
       onValidImage && onValidImage();
       return;
     }
@@ -84,6 +89,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
     // Fetch the defaults and use them
     APIGet(DEFAULT_IMAGE_PATH)
       .then((data: string) => {
+        console.log(`Default Image: `, data);
         if (!cancelled) {
           if (data) {
             // Use the default image path set

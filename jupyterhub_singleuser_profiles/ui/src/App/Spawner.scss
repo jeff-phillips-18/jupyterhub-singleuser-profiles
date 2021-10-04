@@ -1,16 +1,4 @@
 .jsp-app__spawner {
-  &__buttons-bar {
-    display: flex;
-    margin: var(--pf-global--spacer--lg) 0;
-
-    .pf-c-button {
-      margin-left: var(--pf-global--spacer--xl);
-
-      &:first-of-type {
-        margin-left: 0;
-      }
-    }
-  }
   &__submit-button {
     margin-left: var(--pf-global--spacer--2xl);
   }
