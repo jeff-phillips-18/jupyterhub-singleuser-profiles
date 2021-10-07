@@ -60,6 +60,35 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
     confirmLabel?: string;
     onConfirm?: () => void;
   }>({ shown: false });
+  const [selections, setSelections] = React.useState<{ all: boolean; selected: string[] }>({
+    all: false,
+    selected: [],
+  });
+
+  const onSelect = (user: JHUser, isSelected: boolean): void => {
+    if (isSelected) {
+      setSelections((prev) => ({
+        all: prev.selected.length === userResults.users.length - 1,
+        selected: [...prev.selected, user.name],
+      }));
+      return;
+    }
+
+    const index = selections.selected.indexOf(user.name);
+    if (index >= 0) {
+      setSelections((prev) => ({
+        all: false,
+        selected: [...prev.selected.slice(0, index), ...prev.selected.slice(index + 1)],
+      }));
+    }
+  };
+
+  const onSelectAll = (event, isSelected) => {
+    setSelections({
+      all: isSelected,
+      selected: isSelected ? userResults.users.map((u) => u.name) : [],
+    });
+  };
 
   const startServer = (user: JHUser) => {
     window.location.href = `./spawn/${user.name}`;
@@ -160,10 +189,17 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
 
     return (
       <>
-        <div className="jsp-app__admin__users__table-body">
+        <div className="jsp-app__admin__users__table">
           <TableComposable aria-label="Simple table" variant="compact">
             <Thead>
               <Tr>
+                <Th
+                  className="jsp-app__admin__users__table__all-select"
+                  select={{
+                    onSelect: onSelectAll,
+                    isSelected: selections.all,
+                  }}
+                />
                 <Th
                   sort={{
                     sortBy: activeSort,
@@ -195,8 +231,16 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
               </Tr>
             </Thead>
             <Tbody>
-              {displayedUsers.map((user) => (
+              {displayedUsers.map((user, index) => (
                 <Tr key={user.name}>
+                  <Td
+                    className="jsp-app__admin__users__table__select"
+                    select={{
+                      rowIndex: index,
+                      onSelect: (event, isSelected) => onSelect(user, isSelected),
+                      isSelected: selections.selected.includes(user.name),
+                    }}
+                  />
                   <Td dataLabel="Username">{user.name}</Td>
                   <Td dataLabel="Privilege">{user.admin ? 'Admin' : 'User'}</Td>
                   <Td dataLabel="Last activity">

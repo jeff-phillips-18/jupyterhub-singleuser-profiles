@@ -5,11 +5,23 @@
       margin-left: var(--pf-global--spacer--xs);
     }
   }
-  &__table-body {
+  &__table {
     max-height: 446px;
     overflow-y: auto;
     .pf-c-table__button-content {
       align-items: center;
+    }
+    &__all-select {
+      vertical-align: middle !important;
+      > input {
+        margin-top: var(--pf-global--spacer--xs);
+      }
+    }
+    &__select {
+      vertical-align: middle !important;
+      > input {
+        margin-top: 0 !important;
+      }
     }
   }
   &__pagination {
