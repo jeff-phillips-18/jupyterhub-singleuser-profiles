@@ -1,5 +1,12 @@
 import * as _ from 'lodash';
-import { API_BASE_PATH, DEV_MODE, DEV_SERVER, MOCK_MODE, FOR_USER } from './const';
+import {
+  API_BASE_PATH,
+  DEV_MODE,
+  DEV_SERVER,
+  MOCK_MODE,
+  FOR_USER,
+  CM_PATH
+} from './const';
 import { mockData } from '../__mock__/mockData';
 
 const getRequestPath = (target: string) => {
@@ -11,6 +18,9 @@ const getRequestPath = (target: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const APIGet = (target: string): Promise<any> => {
+  if (target === CM_PATH) {
+    console.log(`   requesting Config Map...`);
+  }
   const headers = {};
   if (FOR_USER) {
     headers['For-User'] = FOR_USER;

@@ -29,8 +29,10 @@ const Spawner: React.FC = () => {
   React.useEffect(() => {
     let cancelled = false;
 
+    console.log(`======= Fetching Config Map ===========`);
     APIGet(CM_PATH).then((data: UserConfigMapType) => {
       if (!cancelled) {
+        console.log(`   last: ${data.last_selected_image}`);
         setUserConfig(data);
       }
     });
@@ -47,6 +49,7 @@ const Spawner: React.FC = () => {
       });
 
     return () => {
+      console.log(`====== CANCELLED =======`);
       cancelled = true;
     };
   }, []);

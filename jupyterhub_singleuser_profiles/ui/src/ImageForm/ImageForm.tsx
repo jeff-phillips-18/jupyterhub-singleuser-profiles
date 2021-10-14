@@ -60,9 +60,14 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
     const currentTag = currentImage?.tags?.find((tag) => tag.name === prevSelectedImageTag?.tag);
     if (currentImage && currentTag) {
       setSelectedImageTag(prevSelectedImageTag);
+      console.log(`Posting last selected image`);
       postChange(userConfig.last_selected_image);
       onValidImage && onValidImage();
       return;
+    } else {
+      console.log(`==== Previous Image not found!`);
+      console.log(`   Tag: `, prevSelectedImageTag);
+      console.log(`   ImageList: `, imageList);
     }
 
     const setFirstValidImage = () => {
@@ -75,6 +80,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
           if (tag && isImageTagBuildValid(tag)) {
             const values = { image: image.name, tag: tag.name };
             setSelectedImageTag(values);
+            console.log(`Posting first valid image`);
             postChange(`${values.image}:${values.tag}`);
             found = true;
           }
@@ -91,6 +97,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
             const values = getValuesFromImageName(data);
             if (values?.image && values.tag) {
               setSelectedImageTag(values);
+              console.log(`Posting default image`);
               postChange(data);
               return;
             }
@@ -106,6 +113,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
               tag: defaultImage.tags?.find((tag) => tag.default)?.name ?? '',
             };
             setSelectedImageTag(values);
+            console.log(`Posting first valid image from images list`);
             postChange(`${values.image}:${values.tag}`);
             return;
           }
@@ -126,6 +134,7 @@ const ImageForm: React.FC<ImageFormProps> = ({ userConfig, onValidImage }) => {
   const handleSelection = (image: ImageType, tag: string, checked: boolean) => {
     if (checked) {
       setSelectedImageTag({ image: image.name, tag });
+      console.log(`Posting selected image`);
       postChange(`${image.name}:${tag}`);
     }
   };
