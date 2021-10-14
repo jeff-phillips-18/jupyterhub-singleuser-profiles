@@ -19,8 +19,7 @@ export const fireTrackingEvent = (
   }
 };
 
-export const initSegment = async (props) => {
-  const { segmentKey, username } = props;
+export const initSegment = (segmentKey: string, username: string): void => {
   const analytics = (window.analytics = window.analytics || []);
   if (analytics.initialize) {
     return;
@@ -52,15 +51,15 @@ export const initSegment = async (props) => {
       'addDestinationMiddleware',
     ];
     analytics.factory = function (e: string) {
-      return function () {
-        let t = Array.prototype.slice.call(arguments);
+      return function (...rest) {
+        const t = Array.prototype.slice.call(rest);
         t.unshift(e);
         analytics.push(t);
         return analytics;
       };
     };
     for (let e = 0; e < analytics.methods.length; e++) {
-      let key = analytics.methods[e];
+      const key = analytics.methods[e];
       analytics[key] = analytics.factory(key);
     }
     analytics.load = function (key: string, e: Event) {
@@ -78,12 +77,10 @@ export const initSegment = async (props) => {
     if (segmentKey) {
       analytics.load(segmentKey);
     }
-    const anonymousIDBuffer = await crypto.subtle.digest(
-      'SHA-1',
-      new TextEncoder().encode(username),
-    );
-    const anonymousIDArray = Array.from(new Uint8Array(anonymousIDBuffer));
-    const anonymousID = anonymousIDArray.map((b) => b.toString(16).padStart(2, '0')).join('');
-    fireTrackingEvent('identify', { anonymousID });
+    crypto.subtle.digest('SHA-1', new TextEncoder().encode(username)).then((anonymousIDBuffer) => {
+      const anonymousIDArray = Array.from(new Uint8Array(anonymousIDBuffer));
+      const anonymousID = anonymousIDArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+      fireTrackingEvent('identify', { anonymousID });
+    });
   }
 };
