@@ -113,6 +113,10 @@ export const stopServerForUser = (username: string): Promise<Response | null> =>
   return hubRequest('DELETE', `${USERS_PATH}/${username}/server`);
 };
 
+export const deleteUser = (username: string): Promise<Response | null> => {
+  return hubRequest('DELETE', `${USERS_PATH}/${username}`);
+};
+
 export const shutdown = (): Promise<Response | null> => {
   return hubRequest('POST', SHUTDOWN_PATH);
 };

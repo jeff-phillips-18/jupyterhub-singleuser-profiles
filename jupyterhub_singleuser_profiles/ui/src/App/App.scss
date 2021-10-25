@@ -57,6 +57,10 @@ body, #root {
     }
   }
 
+  &__confirm-body > p {
+    margin-top: var(--pf-global--spacer--md);
+  }
+
   &__inline-link {
     margin-left: var(--pf-global--spacer--sm);
     svg {

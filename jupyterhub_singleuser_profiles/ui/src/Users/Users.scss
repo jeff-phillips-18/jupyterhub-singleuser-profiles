@@ -22,10 +22,13 @@
       margin-left: var(--pf-global--spacer--sm);
     }
   }
+  &__unregister-header {
+    width: 200px !important;
+  }
   &__status-message.pf-c-button.pf-m-disabled {
     color: var(--pf-c-table--cell--Color);
   }
-  &__server-button {
+  &__table-button {
     .pf-c-button {
       margin-right: calc(-1 * var(--pf-global--spacer--md));
       padding-top: 0;

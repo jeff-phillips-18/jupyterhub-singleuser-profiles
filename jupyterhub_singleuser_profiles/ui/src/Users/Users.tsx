@@ -9,7 +9,7 @@ import {
 } from '@patternfly/react-core';
 import { TableComposable, Thead, Tbody, Tr, Th, Td } from '@patternfly/react-table';
 import { ExternalLinkAltIcon } from '@patternfly/react-icons';
-import { PRODUCT_NAME, USER_MANAGEMENT_URL } from '../utils/const';
+import { FOR_USER, PRODUCT_NAME, USER, USER_MANAGEMENT_URL } from '../utils/const';
 import { JHUser, UsersResults } from '../utils/types';
 import {
   ACTIVITY_SORT,
@@ -20,7 +20,7 @@ import {
   timeSinceActive,
   userSorter,
 } from '../utils/userUtils';
-import { stopServerForUser } from '../utils/HubCalls';
+import { deleteUser, stopServerForUser } from '../utils/HubCalls';
 import ConfirmationModal from '../utils/ConfirmationModal';
 
 import './Users.scss';
@@ -84,6 +84,46 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
       ),
       confirmLabel: 'Stop',
       onConfirm: () => doStopServer(user),
+    });
+  };
+
+  const doUnregisterUser = (user: JHUser) => {
+    setDisabledUserActions((prevActions) => [...prevActions, user.name]);
+    deleteUser(user.name).then(() => {
+      setDisabledUserActions((prevActions) => {
+        const index = prevActions.indexOf(user.name);
+        if (index >= 0) {
+          return [...prevActions.slice(0, index), ...prevActions.slice(index + 1)];
+        }
+        return prevActions;
+      });
+      forceUserUpdate();
+    });
+    setConfirmationModal({ shown: false });
+  };
+
+  const unregisterUser = (user: JHUser) => {
+    setConfirmationModal({
+      shown: true,
+      title: 'Unregister server',
+      message: (
+        <div className="jsp-app__confirm-body">
+          Are you sure you want to unregister user <b>{user.name}</b>?
+          <p>
+            Unregistering a user does not delete the {PRODUCT_NAME} user, it only removes the user
+            from the JupyterHub user database. To fully delete the user you must delete the{' '}
+            {PRODUCT_NAME} user.
+            <span className="jsp-app__inline-link">
+              <a href={USER_MANAGEMENT_URL} target="_blank" rel="noopener noreferrer">
+                Learn more about OpenShift user management
+                <ExternalLinkAltIcon />
+              </a>
+            </span>
+          </p>
+        </div>
+      ),
+      confirmLabel: 'Unregister',
+      onConfirm: () => doUnregisterUser(user),
     });
   };
 
@@ -158,6 +198,7 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
                 >
                   Server status
                 </Th>
+                <Th className="jsp-admin__users__unregister-header" />
               </Tr>
             </Thead>
             <Tbody>
@@ -167,7 +208,7 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
                   <Td dataLabel="Privilege">{user.admin ? 'Admin' : 'User'}</Td>
                   <Td dataLabel="Last activity">{timeSinceActive(user)}</Td>
                   <Td dataLabel="Server">
-                    <div className="jsp-admin__users__server-button">
+                    <div className="jsp-admin__users__table-button">
                       {user.pending ? (
                         <Button
                           className="jsp-admin__users__status-message"
@@ -198,6 +239,21 @@ const Users: React.FC<UsersPropTypes> = ({ userResults, forceUserUpdate, pageRef
                           )}
                         </>
                       )}
+                    </div>
+                  </Td>
+                  <Td>
+                    <div className="jsp-admin__users__table-button">
+                      <Button
+                        variant={ButtonVariant.link}
+                        onClick={() => unregisterUser(user)}
+                        isDisabled={
+                          disabledUserActions.includes(user.name) || FOR_USER
+                            ? FOR_USER == user.name
+                            : USER == user.name
+                        }
+                      >
+                        Unregister
+                      </Button>
                     </div>
                   </Td>
                 </Tr>
